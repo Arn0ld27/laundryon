@@ -1,0 +1,1056 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Laundry · Text left aligned with fade</title>
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Roboto, system-ui, sans-serif;
+        }
+
+        body {
+            background-color: #f5f7fb;
+            color: #1e1e2f;
+            line-height: 1.5;
+            overflow-x: hidden;
+        }
+
+        /* ---- navigation / header (sticky) ---- */
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 5%;
+            background-color: #ffffff;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.03);
+            border-bottom: 1px solid #f0f0f5;
+            position: fixed;
+            top: 0;
+            width: 100%;
+            z-index: 1000;
+            backdrop-filter: blur(2px);
+        }
+
+        .logo {
+            font-weight: 700;
+            font-size: clamp(1.4rem, 4vw, 1.8rem);
+            letter-spacing: -0.5px;
+            color: #2a3b5e;
+            white-space: nowrap;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: clamp(1rem, 3vw, 2.5rem);
+            font-weight: 500;
+            color: #2e405b;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: inherit;
+            font-size: clamp(0.9rem, 2.5vw, 1.1rem);
+            transition: color 0.2s;
+            padding: 0.3rem 0;
+            border-bottom: 2px solid transparent;
+            white-space: nowrap;
+        }
+
+        .nav-links a:hover {
+            color: #577b9c;
+            border-bottom-color: #577b9c;
+        }
+
+        .nav-links a.active {
+            color: #1f2b41;
+            border-bottom: 2px solid #1f2b41;
+            font-weight: 600;
+        }
+
+        /* ----- each section = full viewport height ----- */
+        .section {
+            min-height: 100vh;
+            width: 100%;
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            scroll-snap-align: start;
+            padding: 80px 5% 2rem;
+        }
+
+        #home {
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            background-color: #ffffff;
+        }
+
+        body {
+            scroll-snap-type: y mandatory;
+        }
+
+        /* ----- HOME SECTION with IMG tags and LEFT ALIGNED text with FADE ----- */
+        .hero-top {
+            position: relative;
+            flex: 1.2;
+            min-height: 500px;
+            width: 100%;
+            display: flex;
+            align-items: center;
+            padding-top: 70px; /* Space for navbar */
+            overflow: hidden;
+            background-color: #2a4b6e; /* Fallback color */
+        }
+
+        .slideshow {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 0;
+        }
+
+        .slide {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            opacity: 0;
+            animation: slideAnimation 15s infinite;
+        }
+
+        .slide img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+        }
+
+        /* Dark overlay for better text readability */
+        .slide::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.4);
+            z-index: 1;
+        }
+
+        @keyframes slideAnimation {
+            0% { opacity: 0; }
+            15% { opacity: 1; }
+            33% { opacity: 1; }
+            48% { opacity: 0; }
+            100% { opacity: 0; }
+        }
+
+        .slide1 { animation-delay: 0s; }
+        .slide2 { animation-delay: 5s; }
+        .slide3 { animation-delay: 10s; }
+
+        /* NEW: Text container with left alignment and fade gradient */
+        .hero-content {
+            position: relative;
+            z-index: 20;
+            max-width: 800px;
+            padding: 3rem 4rem;
+            color: white;
+            text-align: left;
+            width: 100%;
+            
+            /* Faded dark blue gradient from left to right */
+            background: linear-gradient(
+                to right,
+                rgba(20, 30, 50, 0.85) 0%,
+                rgba(20, 30, 50, 0.6) 40%,
+                rgba(20, 30, 50, 0.3) 70%,
+                rgba(20, 30, 50, 0) 100%
+            );
+            
+            border-radius: 0 2rem 2rem 0;
+            margin-left: 0;
+            backdrop-filter: blur(2px);
+        }
+
+        .hero-content h1 {
+            font-size: clamp(2.5rem, 6vw, 4.5rem);
+            font-weight: 700;
+            margin-bottom: 1rem;
+            line-height: 1.2;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+
+        .hero-content p {
+            font-size: clamp(1.3rem, 3vw, 1.8rem);
+            margin-bottom: 2rem;
+            font-weight: 300;
+            text-shadow: 1px 1px 3px rgba(0,0,0,0.3);
+        }
+
+        .hero-content .btn {
+            background-color: white;
+            color: #1f2b41;
+            font-size: clamp(1rem, 3vw, 1.2rem);
+            padding: 0.8rem 2rem;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.2);
+            border-radius: 40px;
+            text-decoration: none;
+            font-weight: 600;
+            display: inline-block;
+            transition: 0.2s;
+            border: 2px solid transparent;
+        }
+
+        .hero-content .btn:hover {
+            background-color: #f0f4fe;
+            transform: translateY(-2px);
+            box-shadow: 0 12px 30px rgba(0,0,0,0.3);
+        }
+
+        /* Home details grid */
+        .home-bottom {
+            flex: 0.9;
+            background: white;
+            display: flex;
+            align-items: center;
+            padding: 2rem 5%;
+            width: 100%;
+        }
+
+        .details-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: clamp(1rem, 3vw, 2rem);
+            max-width: 1300px;
+            margin: 0 auto;
+            width: 100%;
+        }
+
+        .detail-card {
+            background: #fafcff;
+            padding: 1.8rem 1.5rem;
+            border-radius: 2rem;
+            border: 1px solid #e9ecf2;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.02);
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            
+            /* Add transition for smooth hover effects */
+            transition: all 0.3s ease;
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+        }
+
+        /* HOVER EFFECT 1: Lift and shadow */
+        .detail-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 15px 30px rgba(87, 123, 156, 0.15);
+            border-color: #577b9c;
+            background: #ffffff;
+        }
+
+        /* HOVER EFFECT 2: Icon animation */
+        .detail-card:hover .step-icon {
+            transform: scale(1.1);
+            color: #2e4a6a;
+        }
+
+        .step-icon {
+            font-size: 2.5rem;
+            color: #577b9c;
+            margin-bottom: 1.2rem;
+            text-align: center;
+            width: 100%;
+            display: block;
+            transition: all 0.3s ease;
+        }
+
+        /* HOVER EFFECT 3: Title color change */
+        .detail-card:hover h3 {
+            color: #577b9c;
+        }
+
+        .detail-card h3 {
+            font-size: clamp(1.2rem, 3vw, 1.8rem);
+            font-weight: 600;
+            color: #223044;
+            margin-bottom: 0.8rem;
+            width: 100%;
+            transition: color 0.3s ease;
+        }
+
+        /* HOVER EFFECT 4: Border glow effect */
+        .detail-card::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 0;
+            height: 3px;
+            background: #577b9c;
+            transition: width 0.3s ease;
+        }
+
+        .detail-card:hover::after {
+            width: 80%;
+        }
+
+        /* HOVER EFFECT 5: Subtle background pattern (optional) */
+        .detail-card:hover {
+            background: linear-gradient(145deg, #ffffff, #f8fbff);
+        }
+
+        /* ----- ABOUT SECTION ----- */
+        .about-section {
+            background-color: #ffffff;
+        }
+
+        .about-container {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: clamp(2rem, 5vw, 5rem);
+            max-width: 1400px;
+            width: 100%;
+            margin: 0 auto;
+            flex-wrap: wrap;
+        }
+
+        /* Image container with hover effects */
+        .about-image {
+            flex: 1 1 400px;
+            border-radius: 2rem;
+            overflow: hidden;
+            box-shadow: 0 25px 40px -10px rgba(0,0,0,0.1);
+            height: clamp(400px, 60vh, 600px);
+            min-width: 300px;
+            
+            /* Smooth transitions */
+            transition: all 0.5s cubic-bezier(0.2, 0.9, 0.3, 1.1);
+            position: relative;
+            cursor: pointer;
+        }
+
+        /* Image styling */
+        .about-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+            transition: transform 0.7s ease;
+        }
+
+        /* Hover effects container */
+        .about-image:hover {
+            box-shadow: 0 35px 60px rgba(87, 123, 156, 0.35);
+            transform: translateY(-5px);
+        }
+
+        /* Image zoom on hover */
+        .about-image:hover img {
+            transform: scale(1.1);
+        }
+
+        /* Overlay effect with icon */
+        .about-image::after {
+            content: '\f06e'; /* Font Awesome eye icon */
+            font-family: 'Font Awesome 6 Free';
+            font-weight: 900;
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(
+                135deg,
+                rgba(87, 123, 156, 0.4),
+                rgba(46, 74, 106, 0.6)
+            );
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 3rem;
+            opacity: 0;
+            transition: opacity 0.4s ease;
+            pointer-events: none;
+            z-index: 2;
+        }
+
+        .about-image:hover::after {
+            opacity: 1;
+        }
+
+        /* Shine effect */
+        .about-image::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -150%;
+            width: 50%;
+            height: 100%;
+            background: linear-gradient(
+                90deg,
+                transparent,
+                rgba(255, 255, 255, 0.3),
+                transparent
+            );
+            transition: left 0.8s ease;
+            z-index: 3;
+            pointer-events: none;
+        }
+
+        .about-image:hover::before {
+            left: 150%;
+        }
+
+        /* Text content - optional hover effect */
+        .about-text {
+            flex: 1 1 400px;
+            max-width: 600px;
+            padding: 1rem;
+            transition: transform 0.3s ease;
+        }
+
+        .about-text:hover {
+            transform: translateX(5px);
+        }
+
+        .about-text h2 {
+            font-size: clamp(2rem, 6vw, 3rem);
+            font-weight: 600;
+            color: #1f2b41;
+            margin-bottom: 1rem;
+            transition: color 0.3s ease;
+        }
+
+        .about-text:hover h2 {
+            color: #577b9c;
+        }
+
+        .about-text h3 {
+            font-size: clamp(1.5rem, 4vw, 2rem);
+            font-weight: 500;
+            color: #2e4a6a;
+            margin-bottom: 1.5rem;
+        }
+
+        .about-text p {
+            font-size: clamp(1rem, 2.5vw, 1.2rem);
+            color: #44566c;
+            margin-bottom: 1.5rem;
+            line-height: 1.6;
+            transition: color 0.3s ease;
+        }
+
+        .about-text:hover p {
+            color: #2e405b;
+        }
+        /* ----- SERVICES (4 boxes) ----- */
+        .services-section {
+            background-color: #f8fafd;
+        }
+
+        .services-container {
+            max-width: 1200px;
+            width: 100%;
+            margin: 0 auto;
+            text-align: center;
+        }
+
+        .services-container .section-title {
+            font-size: clamp(2rem, 6vw, 3rem);
+            margin-bottom: 2rem;
+            color: #1f2b41;
+        }
+
+        .four-box-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: clamp(1rem, 3vw, 2rem);
+            justify-items: center;
+            align-items: stretch;
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        .service-box {
+            background: #ffffff;
+            border-radius: 2rem;
+            overflow: hidden;
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.03);
+            border: 1px solid #e9ecf2;
+            width: 100%;
+            max-width: 400px;
+            transition: transform 0.2s;
+        }
+
+        .service-box:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 25px 40px rgba(0,0,0,0.05);
+        }
+
+        .image-box img {
+            width: 100%;
+            height: 250px;
+            object-fit: cover;
+            display: block;
+            transition: transform 0.4s;
+        }
+
+        .image-box:hover img {
+            transform: scale(1.03);
+        }
+
+        .text-box {
+            padding: 1.8rem 1.5rem;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            height: 100%;
+            text-align: left;
+        }
+
+        .text-box h3 {
+            font-size: clamp(1.3rem, 4vw, 2rem);
+            font-weight: 600;
+            color: #223044;
+            margin-bottom: 1rem;
+        }
+
+        .mono-details {
+            font-family: 'Courier New', monospace;
+            background: #f3f7fd;
+            padding: 1rem;
+            border-radius: 1rem;
+            color: #2f4562;
+            font-size: 0.9rem;
+            border: 1px solid #dae2ed;
+            line-height: 1.6;
+            margin-bottom: 1rem;
+        }
+
+        .description {
+            color: #44566c;
+            font-size: 0.95rem;
+            line-height: 1.5;
+        }
+
+        /* ----- CONTACT SECTION ----- */
+        .contact-section {
+            background-color: #ffffff;
+        }
+
+        .contact-container {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: clamp(2rem, 5vw, 5rem);
+            max-width: 1300px;
+            width: 100%;
+            margin: 0 auto;
+            flex-wrap: wrap;
+        }
+
+        .contact-image {
+            flex: 1 1 400px;
+            border-radius: 2rem;
+            overflow: hidden;
+            box-shadow: 0 25px 40px -10px rgba(0,0,0,0.1);
+            height: clamp(400px, 60vh, 550px);
+            min-width: 300px;
+        }
+
+        .contact-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+        }
+
+        .contact-form-box {
+            flex: 1 1 400px;
+            max-width: 550px;
+            background: #ffffff;
+            padding: 2rem;
+            border-radius: 2rem;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.03);
+            border: 1px solid #eef2f7;
+        }
+
+        .contact-form-box h2 {
+            font-size: clamp(2rem, 6vw, 2.8rem);
+            font-weight: 600;
+            color: #1f2b41;
+            margin-bottom: 0.5rem;
+        }
+
+        .contact-form-box .sub {
+            font-size: clamp(1rem, 3vw, 1.2rem);
+            color: #4f658a;
+            margin-bottom: 1.5rem;
+        }
+
+        .input-group {
+            margin-bottom: 1.2rem;
+        }
+
+        .input-group label {
+            display: block;
+            font-weight: 600;
+            margin-bottom: 0.3rem;
+            color: #2c3e5c;
+            font-size: 0.95rem;
+        }
+
+        .input-group input,
+        .input-group textarea {
+            width: 100%;
+            padding: 0.9rem 1.2rem;
+            border: 1px solid #cdd9e9;
+            border-radius: 40px;
+            font-size: 1rem;
+            background: #fafcff;
+            transition: 0.2s;
+        }
+
+        .input-group input:focus,
+        .input-group textarea:focus {
+            outline: none;
+            border-color: #577b9c;
+            box-shadow: 0 0 0 3px rgba(87,123,156,0.1);
+            background: #ffffff;
+        }
+
+        .input-group textarea {
+            border-radius: 28px;
+            resize: vertical;
+            min-height: 100px;
+        }
+
+        .btn-send {
+            background-color: #1f2b41;
+            color: white;
+            font-weight: 600;
+            padding: 0.9rem 2rem;
+            border-radius: 40px;
+            border: none;
+            font-size: 1.1rem;
+            cursor: pointer;
+            transition: 0.2s;
+            width: 100%;
+        }
+
+        .btn-send:hover {
+            background-color: #2e4a6a;
+        }
+
+        /* Popup */
+        .popup {
+            display: none;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: white;
+            padding: 2rem;
+            border-radius: 2rem;
+            box-shadow: 0 30px 60px rgba(0,0,0,0.2);
+            z-index: 2000;
+            text-align: center;
+            max-width: 90%;
+            width: 350px;
+        }
+
+        .popup.show {
+            display: block;
+            animation: fadeIn 0.2s;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translate(-50%, -40%); }
+            to { opacity: 1; transform: translate(-50%, -50%); }
+        }
+
+        .popup i {
+            font-size: 3rem;
+            color: #2ecc71;
+            margin-bottom: 1rem;
+        }
+
+        .popup h3 {
+            font-size: 1.8rem;
+            margin-bottom: 0.5rem;
+            color: #1f2b41;
+        }
+
+        .popup p {
+            font-size: 1rem;
+            color: #44566c;
+            margin-bottom: 1.2rem;
+        }
+
+        .popup .btn-close {
+            background-color: #1f2b41;
+            color: white;
+            border: none;
+            padding: 0.7rem 1.8rem;
+            border-radius: 40px;
+            font-weight: 600;
+            cursor: pointer;
+        }
+
+        .popup .btn-close:hover {
+            background-color: #2e4a6a;
+        }
+
+        .overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.3);
+            backdrop-filter: blur(3px);
+            z-index: 1999;
+        }
+
+        .overlay.show {
+            display: block;
+        }
+
+        .footer-note {
+            text-align: center;
+            color: #7286a2;
+            font-size: 0.9rem;
+            padding: 1rem;
+            background-color: #f5f7fb;
+            border-top: 1px solid #d9e0ec;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .navbar {
+                padding: 0.8rem 5%;
+            }
+            
+            .nav-links {
+                gap: 1rem;
+            }
+            
+            .details-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .four-box-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .hero-content {
+                padding: 2rem;
+                max-width: 100%;
+                background: linear-gradient(
+                    to right,
+                    rgba(20, 30, 50, 0.9) 0%,
+                    rgba(20, 30, 50, 0.7) 70%,
+                    rgba(20, 30, 50, 0.4) 100%
+                );
+            }
+            
+            .section {
+                scroll-snap-align: none;
+            }
+            
+            body {
+                scroll-snap-type: none;
+            }
+
+            .hero-top {
+                padding-top: 60px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .logo {
+                font-size: 1.2rem;
+            }
+            
+            .nav-links a {
+                font-size: 0.8rem;
+            }
+
+            .hero-top {
+                padding-top: 55px;
+            }
+            
+            .hero-content {
+                padding: 1.5rem;
+            }
+            
+            .hero-content h1 {
+                font-size: 2rem;
+            }
+            
+            .hero-content p {
+                font-size: 1.1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="navbar">
+        <div class="logo">SLH</div>
+        <div class="nav-links" id="mainNav">
+            <a href="#home" class="nav-item" data-page="home">Home</a>
+            <a href="#about" class="nav-item" data-page="about">About</a>
+            <a href="#services" class="nav-item" data-page="services">Services</a>
+            <a href="#contact" class="nav-item" data-page="contact">Contact</a>
+        </div>
+    </div>
+
+    <!-- HOME SECTION -->
+    <section id="home" class="section" style="padding:0;">
+        <div style="width:100%; height:100vh; display: flex; flex-direction: column;">
+            <div class="hero-top">
+                <div class="slideshow">
+                    <!-- YOUR IMAGES -->
+                    <div class="slide slide1">
+                        <img src="images/laundry1.jpeg" alt="Laundry service 1">
+                    </div>
+                    <div class="slide slide2">
+                        <img src="images/laundry2.jpg" alt="Laundry service 2">
+                    </div>
+                    <div class="slide slide3">
+                        <img src="images/laundry3.jpg" alt="Laundry service 3">
+                    </div>
+                </div>
+                
+                <!-- UPDATED: Left aligned text with faded dark blue gradient -->
+                <div class="hero-content">
+                    <h1>SHAI    LAUNDRY HUB <br>       <br>          </h1>
+                    <p>We take care about cleanliness of your cloths</p>
+                    <a href="#services" class="btn">Services </a>
+                </div>
+            </div>
+            
+            <div class="home-bottom">
+                <div class="details-grid">
+                    <div class="detail-card">
+                        <div class="step-icon"><i class="fas fa-hand-holding-heart"></i></div>
+                        <h3>We collect your clothes</h3>
+                        <p>The automated process starts as soon as your clothes go into the machine. The outcome is gleaming clothes!</p>
+                    </div>
+                    <div class="detail-card">
+                        <div class="step-icon"><i class="fas fa-pump-soap"></i></div>
+                        <h3>Wash your clothes</h3>
+                        <p>The automated process starts as soon as your clothes go into the machine. The outcome is gleaming clothes!</p>
+                    </div>
+                    <div class="detail-card">
+                        <div class="step-icon"><i class="fas fa-truck"></i></div>
+                        <h3>Get delivery</h3>
+                        <p>The automated process starts as soon as your clothes go into the machine. The outcome is gleaming clothes!</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ABOUT SECTION -->
+    <section id="about" class="section about-section">
+        <div class="about-container">
+            <div class="about-image">
+                <img src="images/logo1.png" alt="About us">
+            </div>
+            <div class="about-text">
+                <h2>ABOUT US</h2>
+                
+                <p>Welcome to Shai Laundry Hub, your trusted partner for reliable and high-quality laundry care. Our goal is to make laundry easier, faster, and more convenient for our customers.</p>
+                <p>Laundry Services was founded with a simple mission: to provide professional laundry solutions while saving our customers time and effort. We understand that in today’s busy lifestyle, doing laundry can be time-consuming. That is why we offer efficient, affordable, and dependable services to meet your needs.</p>
+                <p> Our team is committed to delivering clean, fresh, and neatly handled clothes using modern laundry equipment and safe detergents. Whether it’s everyday clothing, delicate fabrics, bed linens, or large laundry loads, we treat every item with care and attention.</p>
+                
+            </div>
+        </div>
+    </section>
+
+    <!-- SERVICES SECTION -->
+    <section id="services" class="section services-section">
+        <div class="services-container">
+            <h2 class="section-title">Services we offer</h2>
+            <div class="four-box-grid">
+                <div class="service-box image-box">
+                    <img src="images/offer2.jpg" alt="Cloth Laundry">
+                </div>
+                <div class="service-box text-box">
+                    <h3>CLOTH LAUNDRY</h3>
+                    
+                    <p class="description">Our cloth laundry service includes washing, drying, and folding your clothes using quality detergents and modern laundry equipment. We ensure that your clothes are properly cleaned, fresh, and carefully handled.</p>
+                </div>
+
+                <div class="service-box text-box">
+                    <h3>CLOTH IRONING</h3>
+                    
+                    <p class="description">Our cloth ironing service helps keep your clothes neat and presentable. Each garment is carefully pressed to remove wrinkles, giving your clothes a clean and professional appearance.</p>
+                </div>
+                <div class="service-box image-box">
+                    <img src="images/offer1.jpeg" alt="Cloth Ironing">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CONTACT SECTION -->
+    <section id="contact" class="section contact-section">
+        <div class="contact-container">
+            <div class="contact-image">
+                <img src="images/contact.png" alt="Contact us">
+            </div>
+            <div class="contact-form-box">
+                <h2>CONTACT US</h2>
+                <div class="sub">GET IN TOUCH</div>
+
+                <div class="input-group">
+                    <label>Enter your name</label>
+                    <input type="text" id="nameInput" placeholder="e.g. Shairine Buisel">
+                </div>
+                <div class="input-group">
+                    <label>Enter Subject</label>
+                    <input type="text" id="subjectInput" placeholder="What's this about?">
+                </div>
+                <div class="input-group">
+                    <label>Message (optional)</label>
+                    <textarea id="messageInput" placeholder="Tell us more ..."></textarea>
+                </div>
+                <button class="btn-send" id="sendBtn">SEND</button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Popup -->
+    <div class="overlay" id="overlay"></div>
+    <div class="popup" id="successPopup">
+        <i class="fas fa-check-circle"></i>
+        <h3>Success!</h3>
+        <p>Your message has been sent. We'll get back to you soon.</p>
+        <button class="btn-close" id="closePopup">OK</button>
+    </div>
+
+    <div class="footer-note">
+        <hr style="border:0; border-top:1px solid #d9e0ec; margin-bottom:1rem;">
+        <p>© Shairine F. Buisel- 224-BUIS-0250163 - Bachelor of Science in Computer Science</p>
+    </div>
+
+    <script>
+        (function() {
+            // Always start at home
+            if (window.location.hash && window.location.hash !== '#home') {
+                window.location.hash = '#home';
+            } else if (!window.location.hash) {
+                history.replaceState(null, null, '#home');
+            }
+
+            // Navigation active highlight
+            const navItems = document.querySelectorAll('.nav-item');
+            const sections = document.querySelectorAll('.section');
+            
+            function removeActive() {
+                navItems.forEach(link => link.classList.remove('active'));
+            }
+
+            function setActiveFromScroll() {
+                let current = '';
+                const scrollPos = window.scrollY + 150;
+                sections.forEach(section => {
+                    const sectionTop = section.offsetTop;
+                    const sectionBottom = sectionTop + section.offsetHeight;
+                    if (scrollPos >= sectionTop && scrollPos < sectionBottom) {
+                        current = section.getAttribute('id');
+                    }
+                });
+                if (current) {
+                    removeActive();
+                    const activeLink = document.querySelector(`.nav-item[href="#${current}"]`);
+                    if (activeLink) activeLink.classList.add('active');
+                } else {
+                    if (window.scrollY < 200) {
+                        removeActive();
+                        document.querySelector('.nav-item[href="#home"]').classList.add('active');
+                    }
+                }
+            }
+
+            window.addEventListener('scroll', setActiveFromScroll);
+            window.addEventListener('load', function() {
+                setActiveFromScroll();
+                window.scrollTo(0, 0);
+            });
+
+            navItems.forEach(link => {
+                link.addEventListener('click', function(e) {
+                    removeActive();
+                    this.classList.add('active');
+                });
+            });
+
+            // Contact form
+            const sendBtn = document.getElementById('sendBtn');
+            const nameInput = document.getElementById('nameInput');
+            const subjectInput = document.getElementById('subjectInput');
+            const popup = document.getElementById('successPopup');
+            const overlay = document.getElementById('overlay');
+            const closeBtn = document.getElementById('closePopup');
+
+            function showPopup() {
+                popup.classList.add('show');
+                overlay.classList.add('show');
+            }
+
+            function hidePopup() {
+                popup.classList.remove('show');
+                overlay.classList.remove('show');
+            }
+
+            sendBtn.addEventListener('click', function(e) {
+                const name = nameInput.value.trim();
+                const subject = subjectInput.value.trim();
+
+                if (name === '' || subject === '') {
+                    alert('❌ Please fill in both Name and Subject fields.');
+                    return;
+                }
+
+                showPopup();
+            });
+
+            closeBtn.addEventListener('click', hidePopup);
+            overlay.addEventListener('click', hidePopup);
+
+            window.addEventListener('keydown', function(e) {
+                if (e.key === 'Escape' && popup.classList.contains('show')) {
+                    hidePopup();
+                }
+            });
+        })();
+    </script>
+</body>
+</html>
